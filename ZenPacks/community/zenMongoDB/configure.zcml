@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <configure
+        xmlns="http://namespaces.zope.org/zope"
+        xmlns:browser="http://namespaces.zope.org/browser"
+        xmlns:zcml="http://namespaces.zope.org/zcml">
+        <configure zcml:condition="installed Products.Zuul">
+
+            <include package="Products.ZenUtils.extdirect.zope" file="meta.zcml"/>
+
+
+            <!-- ZenPack Info -->
+
+            <browser:directRouter
+                name="zenMongoDB_router"
+                for="*"
+                class="ZenPacks.community.zenMongoDB.routers.zenMongoDBRouter"
+                namespace="Zenoss.remote"
+                permission="zenoss.View"
+            />
+    
+            <adapter
+                name="zenMongoDBAdapter"
+                provides="ZenPacks.community.zenMongoDB.interfaces.IzenMongoDBFacade"
+                for="*"
+                factory="ZenPacks.community.zenMongoDB.facades.zenMongoDBFacade"
+            />
+                
+            <browser:resourceDirectory
+                    name="zenMongoDB"
+                    directory="resources"
+            />
+
+            <!-- Component Info -->
+            <adapter factory="ZenPacks.community.zenMongoDB.info.MongoDBInfo"
+                for="ZenPacks.community.zenMongoDB.MongoDB.MongoDB"
+                provides="ZenPacks.community.zenMongoDB.interfaces.IMongoDBInfo"
+            />
+    
+            <browser:viewlet
+                name="js-MongoDB"
+                paths="/++resource++zenMongoDB/mongodb.js"
+                weight="10"
+                manager="Products.ZenUI3.browser.interfaces.IJavaScriptSrcManager"
+                class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
+                permission="zope2.Public"
+            />
+
+            <utility provides="zope.schema.interfaces.IVocabularyFactory"
+                component=".info.MongoDBgetEventClassesVocabulary"
+                name="MongoDBgetEventClasses"
+            />
+
+            <browser:viewlet
+                  name="component-add-menu-mongodb"
+                  paths="/++resource++zenMongoDB/mongodb-add.js"
+                  weight="9"
+                  for="Products.ZenModel.Device.Device"
+                  manager="Products.ZenUI3.browser.interfaces.IHeadExtraManager"
+                  class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
+                  permission="zope2.Public"
+            />
+
+        </configure>
+    </configure>
+
