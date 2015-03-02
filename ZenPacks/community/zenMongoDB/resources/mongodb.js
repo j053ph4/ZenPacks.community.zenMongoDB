@@ -9,7 +9,11 @@
             return ob;
         }
     }
-
+    
+    function pass_link(ob){ 
+        return ob; 
+    }
+    
     ZC.MongoDBPanel = Ext.extend(ZC.ComponentGridPanel, {
         constructor: function(config) {
             config = Ext.applyIf(config||{}, {
@@ -27,6 +31,9 @@
                     }, 
                     {
                         "name": "name"
+                    }, 
+                    {
+                        "name": "getIpserviceLink"
                     }, 
                     {
                         "name": "port"
@@ -62,9 +69,18 @@
                         "dataIndex": "name"
                     }, 
                     {
-                        "header": "Port", 
-                        "width": 120, 
                         "sortable": "true", 
+                        "width": 120, 
+                        "header": "IP Service", 
+                        "renderer": "pass_link", 
+                        "id": "getIpserviceLink", 
+                        "dataIndex": "getIpserviceLink"
+                    }, 
+                    {
+                        "sortable": "true", 
+                        "width": 120, 
+                        "header": "Port", 
+                        "renderer": "pass_link", 
                         "id": "port", 
                         "dataIndex": "port"
                     }, 
