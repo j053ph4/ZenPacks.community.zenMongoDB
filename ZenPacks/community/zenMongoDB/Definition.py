@@ -15,6 +15,7 @@ DATA = {
                                         'hostname' : addProperty('Hostname or IP','Basic','id', switch='-H', override=True, isReference=True),
                                         'port' : addProperty('Port','Basic','27017', switch='-p',optional='false'),
                                         'eventClass' : getEventClass('/App/MongoDB'),
+                                        'productKey' : getProductClass('MongoDB'),
                                         },
                           },
         'cmdFile' : 'check_mongo',
